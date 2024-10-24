@@ -1,5 +1,5 @@
 # השתמש בתמונה בסיסית
-FROM node:18
+FROM node:20
 
 # הגדר את תיקיית העבודה
 WORKDIR /app
