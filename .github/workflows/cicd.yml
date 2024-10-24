@@ -3,17 +3,17 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - master
+      - master  # השתנה ל-master
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # עדכון לגרסה 3
+        uses: actions/checkout@v3
 
       - name: Log in to Docker Hub
-        uses: docker/login-action@v2  # עדכון לגרסה 2
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
