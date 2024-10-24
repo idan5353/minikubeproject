@@ -10,17 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4  # גרסה עדכנית
+        uses: actions/checkout@v3  # גרסה עדכנית
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4  # גרסה עדכנית
+        uses: actions/setup-node@v3  # גרסה עדכנית
         with:
-          node-version: '20'  # העבר ל-Node.js 20
+          node-version: '20'  # ודא שאתה משתמש ב-Node.js 20
 
       - name: Install dependencies
-        run: npm ci  # התקן תלויות ממועדף
-        env:
-          NODE_ENV: production  # אם אתה רוצה להתקין רק תלויות בפרודקשן
+        run: npm install  # השתמש ב-npm install במקום npm ci כדי לראות אם זה פותר את הבעיה
 
       - name: Build Docker image
         run: docker build -t my-hello-world:${{ github.sha }} .
