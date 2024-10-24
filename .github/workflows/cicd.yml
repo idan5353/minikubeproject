@@ -27,7 +27,46 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
+    steps:name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - master  # השתנה ל-master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # גרסה 3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2  # גרסה 2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Build Docker image
+        run: docker build -t my-hello-world:${{ github.sha }} .
+
+      - name: Push Docker image
+        run: docker push my-hello-world:${{ github.sha }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Set up Kubernetes
+        uses: azure/setup-kubectl@v1
+        with:
+          version: 'latest'
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl set image deployment/hello-world hello-world=my-hello-world:${{ github.sha }} --record
+          kubectl patch deployment hello-world -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"hello-world\",\"env\":[{\"name\":\"SERVICE_IP\",\"value\":\"${{ secrets.SERVICE_IP }}\"}]}]}}}}}"
+
       - name: Set up Kubernetes
         uses: azure/setup-kubectl@v1
         with:
