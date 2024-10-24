@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # גרסה עדכנית
+        uses: actions/checkout@v4  # גרסה עדכנית
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3  # גרסה עדכנית
+        uses: actions/setup-node@v4  # גרסה עדכנית
         with:
           node-version: '20'  # ודא שאתה משתמש ב-Node.js 20
 
