@@ -3,14 +3,14 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - master  # השתנה ל-master
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # גרסה 3
+        uses: actions/checkout@v4  # עדכון לגרסה 4
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2  # גרסה 2
